@@ -4,14 +4,14 @@ const jwt = require('jsonwebtoken')
 
 const signup = async (req, res) => {
   try {
-    const { password, email } = req.body
+    const { nameUser, password, email } = req.body
     const passRegexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/
     const validatePassword = passRegexp.test(password)
     if (!validatePassword) {
-      return res.status(400).json({message: 'La contraseña debería tener al menos 8 caracteres, al menos 1 dígito, al menos 1 minúscula, al menos 1 mayúscula y al menos 1 caracter no alfanumérico como *,-, o #'});
+      return res.status(400).json({message: 'La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico como *,-, o #'});
     } else {
       const passwordHash = await bcrypt.hash(password, 10)
-      const user = await User.create({ email, password: passwordHash })
+      const user = await User.create({ nameUser, email, password: passwordHash })
       const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {expiresIn: 60 * 60 * 24})
    
       return res.status(201).json(token)

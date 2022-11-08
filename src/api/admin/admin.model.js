@@ -13,10 +13,10 @@ const adminSchema = new Schema({
     type: String,
     required: true
   },
-  collections: [
+  products: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Collection",
+      ref: "Product",
     },
   ],
   news: [

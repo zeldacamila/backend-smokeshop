@@ -4,15 +4,16 @@ const productSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
-    collection: {
-      type: Schema.Types.ObjectId,
-      ref: "Collection",
+    collectionName: {
+      type: String,
+      required: true,
+      enum: ['Vapos', 'Bongs', 'Grinders', 'Candelas', "Pa' Enrolar", 'Pipas', 'Para tu cultivo', 'Accesorios', 'Productos CBD', 'Combos'],
     },
     price: {
       type: Number,
-      required: true,
+      required: true
     },
     details: {
       type: String,
@@ -20,7 +21,12 @@ const productSchema = new Schema(
     },
     images: [{
       type: String
-    }]
+    }],
+    admin: {
+      type: Schema.Types.ObjectId,
+      ref: 'Admin',
+      required: true
+    }
   }, {
     timestamps: true,
     versionKey: false

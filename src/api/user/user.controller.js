@@ -23,7 +23,8 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { password, email } = req.body
+    const { email, password } = req.body
+    console.log('email', email)
     const user = await User.findOne({ email })
     if (!user) {
       throw new Error('Credenciales inválidas')
@@ -35,7 +36,7 @@ const login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: 60 * 60 * 24 })
     return res.status(200).json(token)
   } catch (error) {
-    return res.status(400).json({message: 'user cant login', data: error.message})
+    return res.status(400).json({message: 'User cant login', data: error.message})
   }
 }
 

@@ -12,9 +12,6 @@ const app = express();
 const port = 8081;
 connect();
 
-//app.use(morgan('dev'))
-
-app.use(express.json())
 app.use(cors({
   "origin": "*",
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -22,6 +19,8 @@ app.use(cors({
   "optionsSuccessStatus": 204
 }))
 
+//app.use(morgan('dev'))
+app.use(express.json())
 
 app.use('/auth', userRoute)
 app.use('/adminauth', adminRoute)
@@ -29,5 +28,5 @@ app.use('/api/products', productRoute)
 app.use('/api/publications', publicationRoute)
 
 app.listen(port, () => {
-  console.log(`Successfully running at http://localhost:${port}`)
+  console.log(`Successfully running at port: ${port}`)
 })

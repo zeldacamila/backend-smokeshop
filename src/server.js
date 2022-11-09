@@ -12,7 +12,7 @@ const app = express();
 const port = 8081;
 connect();
 
-app.use(morgan('dev'))
+//app.use(morgan('dev'))
 
 app.use(express.json())
 app.use(cors({

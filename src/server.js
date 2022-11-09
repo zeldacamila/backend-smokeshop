@@ -13,8 +13,15 @@ const port = 8081;
 connect();
 
 app.use(morgan('dev'))
-app.use(cors())
+
 app.use(express.json())
+app.use(cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}))
+
 
 app.use('/auth', userRoute)
 app.use('/adminauth', adminRoute)

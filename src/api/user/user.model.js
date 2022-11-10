@@ -13,6 +13,22 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
+  news: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Publication",
+    },
+]
 }, {
   timestamps: true,
   versionKey: false

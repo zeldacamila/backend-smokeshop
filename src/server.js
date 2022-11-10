@@ -1,10 +1,9 @@
-//require('dotenv').config()
+require('dotenv').config()
 const express = require('express');
-//const morgan = require('morgan');
+const morgan = require('morgan');
 const cors = require('cors'); 
 const { connect } = require('./db');
 const userRoute = require('./api/user/user.route')
-const adminRoute = require('./api/admin/admin.route')
 const productRoute = require('./api/product/product.route')
 const publicationRoute = require('./api/publication/publication.route')
 
@@ -19,11 +18,10 @@ app.use(cors({
   "optionsSuccessStatus": 204
 }))
 
-//app.use(morgan('dev'))
+app.use(morgan('dev'))
 app.use(express.json())
 
 app.use('/auth', userRoute)
-app.use('/adminauth', adminRoute)
 app.use('/api/products', productRoute)
 app.use('/api/publications', publicationRoute)
 

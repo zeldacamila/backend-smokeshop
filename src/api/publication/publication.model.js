@@ -20,9 +20,9 @@ const publicationSchema = new Schema(
     author: {
       type: String
     },
-    admin: {
+    user: {
       type: Schema.Types.ObjectId,
-      ref: 'Admin',
+      ref: 'User',
       required: true
     }
   }, {

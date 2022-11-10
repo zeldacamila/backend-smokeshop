@@ -1,13 +1,13 @@
 const express = require('express')
 const { uploadProduct, listProductsByCollection, listProducts, updateProduct, destroyProduct } = require('./product.controller')
-const { isAdminAuthenticated } = require('../../middelware/adminauth')
+const { isAuthenticated } = require('../../middelware/authentication')
 
 const router = express.Router()
 
-router.post('/', isAdminAuthenticated, uploadProduct)
+router.post('/', isAuthenticated, uploadProduct)
 router.get('/:collection', listProductsByCollection)
 router.get('/', listProducts)
-router.put('/:productId', isAdminAuthenticated, updateProduct)
-router.delete('/:productId', isAdminAuthenticated, destroyProduct)
+router.put('/:productId', isAuthenticated, updateProduct)
+router.delete('/:productId', isAuthenticated, destroyProduct)
 
 module.exports = router

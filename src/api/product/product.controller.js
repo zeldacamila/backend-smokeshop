@@ -1,18 +1,19 @@
 const Product = require('./product.model')
-const Admin = require('../admin/admin.model')
+const User = require('../user/user.model')
 
 const uploadProduct = async (req, res) => {
   try {
     const productData = req.body
-    const id = req.admin
-    const admin = await Admin.findById(id)
-    const product = await Product.create({ ...productData, admin: id })
-    admin.products.push(product)
-    await admin.save({ validateBeforeSave: false })
-
-    res.status(201).json({ message: 'Product uploaded successfully', data: product })
+    const id = req.user
+    const user = await User.findById(id)
+    if (user.isAdmin === true) { 
+      const product = await Product.create({ ...productData, user: id })
+      user.products.push(product)
+      await user.save({ validateBeforeSave: false })
+      res.status(201).json({ message: 'Product uploaded successfully', data: product })
+    }
   } catch (err) {
-    res.status(400).json({ message: 'Product cannot be uploaded', data: err })
+    res.status(400).json({ message: 'Product cannot be uploaded', data: err.message })
   }
 }
 
@@ -45,23 +46,27 @@ const updateProduct = async (req, res) => {
   try {
     const  { productId } = req.params
     const updatedProduct = req.body
-    const id = req.admin
-    const admin = await Admin.findById(id)
-    const productUpdated = await Product.findByIdAndUpdate(productId, updatedProduct, {new: true})
-    res.status(200).json({ message: 'Product updated successfully', data: productUpdated})
+    const id = req.user
+    const user = await User.findById(id)
+    if (user.isAdmin === true) { 
+      const productUpdated = await Product.findByIdAndUpdate(productId, updatedProduct, {new: true})
+      res.status(200).json({ message: 'Product updated successfully', data: productUpdated})
+    }
   } catch(err) {
-    res.status(404).json({ message: 'Product could not be updated', data: err})
+    res.status(400).json({ message: 'Product could not be updated', data: err})
   }
 }
 
 const destroyProduct = async (req, res) => {
   try {
     const { productId } = req.params
-    const id = req.admin
-    const admin = await Admin.findById(id)
-    const product = await Product.find({_id: productId, admin: id})
-    const deletedProduct = await Product.deleteOne(product._id)
-    res.status(200).json({ message: 'Product deleted', data: product[0].name})
+    const id = req.user
+    const user = await User.findById(id)
+    if (user.isAdmin === true) { 
+      const product = await Product.find({_id: productId, admin: id})
+      const deletedProduct = await Product.deleteOne(product._id)
+      res.status(200).json({ message: 'Product deleted', data: product[0].name})
+    }
   } catch(err) {
     res.status(404).json({ message: 'Product does not exist', data: err})
   }

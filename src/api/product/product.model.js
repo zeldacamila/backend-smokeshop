@@ -22,9 +22,9 @@ const productSchema = new Schema(
     images: [{
       type: String
     }],
-    admin: {
+    user: {
       type: Schema.Types.ObjectId,
-      ref: 'Admin',
+      ref: 'User',
       required: true
     }
   }, {

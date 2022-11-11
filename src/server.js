@@ -6,6 +6,7 @@ const { connect } = require('./db');
 const userRoute = require('./api/user/user.route')
 const productRoute = require('./api/product/product.route')
 const publicationRoute = require('./api/publication/publication.route')
+const { transporter, verify } = require('./utils/mailer')
 
 const app = express();
 const port = 8081;
@@ -20,6 +21,7 @@ app.use(cors({
 
 app.use(morgan('dev'))
 app.use(express.json())
+verify(transporter)
 
 app.use('/auth', userRoute)
 app.use('/api/products', productRoute)

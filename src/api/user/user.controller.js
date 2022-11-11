@@ -1,6 +1,7 @@
 const User = require('./user.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { transporter, welcome } = require('../../utils/mailer')
 
 const signup = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ const signup = async (req, res) => {
     } else {
       const passwordHash = await bcrypt.hash(password, 10)
       const user = await User.create({ nameUser, email, password: passwordHash })
+      await transporter.sendMail(welcome(user))
       const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {expiresIn: 60 * 60 * 24})
    
       return res.status(201).json(token)

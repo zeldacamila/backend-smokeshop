@@ -4,6 +4,7 @@ const User = require('../user/user.model')
 const uploadPublication = async (req, res) => {
   try {
     const publicationData = req.body
+    console.log(req.body)
     const id = req.user
     const user = await User.findById(id)
     if (user.isAdmin === true) { 

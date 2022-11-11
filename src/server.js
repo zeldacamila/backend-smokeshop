@@ -7,6 +7,7 @@ const userRoute = require('./api/user/user.route')
 const productRoute = require('./api/product/product.route')
 const publicationRoute = require('./api/publication/publication.route')
 const { transporter, verify } = require('./utils/mailer')
+const formData = require('./utils/formData')
 
 const app = express();
 const port = 8081;
@@ -22,6 +23,10 @@ app.use(cors({
 app.use(morgan('dev'))
 app.use(express.json())
 verify(transporter)
+
+app.post("/", formData, (req, res) => {
+  console.log("Succesfully")
+})
 
 app.use('/auth', userRoute)
 app.use('/api/products', productRoute)

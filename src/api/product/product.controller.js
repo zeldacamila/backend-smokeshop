@@ -4,6 +4,7 @@ const User = require('../user/user.model')
 const uploadProduct = async (req, res) => {
   try {
     const productData = req.body
+    console.log('productData', productData)
     const id = req.user
     const user = await User.findById(id)
     if (user.isAdmin === true) { 

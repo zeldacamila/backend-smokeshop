@@ -1,6 +1,6 @@
-require('dotenv').config()
+//require('dotenv').config() /*Solo en local*/
 const express = require('express');
-const morgan = require('morgan');
+//const morgan = require('morgan'); /*Solo en local*/
 const cors = require('cors'); 
 const { connect } = require('./db');
 const userRoute = require('./api/user/user.route')
@@ -20,7 +20,7 @@ app.use(cors({
   "optionsSuccessStatus": 204
 }))
 
-app.use(morgan('dev'))
+//app.use(morgan('dev')) /*Solo en local*/
 app.use(express.json())
 verify(transporter)
 

@@ -10,7 +10,7 @@ const { transporter, verify } = require('./utils/mailer')
 const formData = require('./utils/formData')
 
 const app = express();
-const port = 8081;
+const port = process.env.PORT || 8081
 connect();
 
 app.use(cors({
